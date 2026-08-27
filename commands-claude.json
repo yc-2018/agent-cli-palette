@@ -1,0 +1,133 @@
+{
+  "settings": {
+    "sidebarWidth": 300,
+    "insertMode": "type",
+    "autoEnter": false,
+    "topMost": false,
+    "shell": "auto",
+    "workDir": ""
+  },
+  "ui": {
+    "title": "Agent CLI 命令面板",
+    "btnNewTerminal": "新开终端",
+    "btnBind": "绑定窗口",
+    "btnDock": "贴靠排版",
+    "btnProfile": "命令表：{0} ▾（点击切换 CLI）",
+    "searchHint": "搜索命令（中文 / 英文 / 拼音缩写）",
+    "chkAutoEnter": "点击后自动回车",
+    "chkTopMost": "窗口置顶",
+    "chkTypeMode": "逐字模拟键盘输入（取消勾选＝用剪贴板粘贴）",
+    "noTarget": "未绑定终端",
+    "boundTo": "已绑定：",
+    "pickTitle": "选择要绑定的终端窗口",
+    "pickOk": "绑定",
+    "pickCancel": "取消",
+    "pickTerminalTag": "[终端] ",
+    "noResult": "没有匹配的命令",
+    "tipCmd": "命令：",
+    "tipKeys": "按键：",
+    "tipHelp": "左键 = 输入到终端　右键 = 复制到剪贴板",
+    "errNoTarget": "还没有绑定终端。请先点【新开终端】或【绑定窗口】。",
+    "errGone": "绑定的终端窗口已经关闭了，请重新绑定。",
+    "errFocus": "没能把输入焦点切到绑定的终端窗口，命令已取消（没有误输入到面板里）。\n\n常见原因：那个终端是以管理员身份运行的，普通权限的面板无法向它发送按键。请改用右键复制命令，或者用【新开终端】开一个同权限的终端。",
+    "errSpawn": "新终端启动了，但没能自动识别它的窗口。请点【绑定窗口】手动选一下。",
+    "reloadBtn": "重载命令表"
+  },
+  "groups": [
+    {
+      "name": "启动 / 会话",
+      "items": [
+        { "label": "启动 Claude（交互模式）", "cmd": "claude", "desc": "在当前目录打开 Claude Code 交互会话，最常用的一条", "tags": "start qd" },
+        { "label": "启动并直接提问", "cmd": "claude \"\"", "desc": "启动后立刻发送一句提问，把内容写在引号里", "tags": "ask tw" },
+        { "label": "继续上一次的会话", "cmd": "claude --continue", "desc": "接着最近一次对话继续，不新建会话（等价 claude -c）", "tags": "continue jx" },
+        { "label": "从历史会话里挑一个恢复", "cmd": "claude --resume", "desc": "列出历史会话，方向键选中后恢复（等价 claude -r）", "tags": "resume hf" },
+        { "label": "一次性问答（不进交互）", "cmd": "claude -p \"\"", "desc": "print 模式：执行完直接输出结果并退出，适合写脚本、接管道", "tags": "print ycx" },
+        { "label": "一次性问答并返回 JSON", "cmd": "claude -p \"\" --output-format json", "desc": "结果以 JSON 格式返回，方便程序解析", "tags": "json" },
+        { "label": "额外授权一个目录", "cmd": "claude --add-dir \"\"", "desc": "把项目外的目录也纳入可读写范围，可重复使用多次", "tags": "adddir ml" },
+        { "label": "退出当前会话", "cmd": "/exit", "desc": "结束会话回到终端，也可以直接按 Ctrl+D", "tags": "exit quit tc" }
+      ]
+    },
+    {
+      "name": "模型 / 权限",
+      "items": [
+        { "label": "用 Opus 模型启动", "cmd": "claude --model opus", "desc": "能力最强，适合复杂重构、架构设计、难 bug", "tags": "opus mx" },
+        { "label": "用 Sonnet 模型启动", "cmd": "claude --model sonnet", "desc": "速度和能力平衡，日常开发首选", "tags": "sonnet mx" },
+        { "label": "会话中途换模型", "cmd": "/model", "desc": "交互过程中随时切换当前使用的模型", "tags": "model hmx" },
+        { "label": "只出方案不改代码", "cmd": "claude --permission-mode plan", "desc": "计划模式：只读分析并给出实施方案，不会动你的文件", "tags": "plan jh" },
+        { "label": "切换权限模式（按键）", "keys": ["Shift+Tab"], "desc": "在 默认 / 自动接受编辑 / 计划模式 之间循环切换", "tags": "shifttab qx" },
+        { "label": "查看和修改权限规则", "cmd": "/permissions", "desc": "管理哪些工具和命令可以免确认自动执行", "tags": "permissions qx" },
+        { "label": "跳过全部确认（危险）", "cmd": "claude --dangerously-skip-permissions", "desc": "不再逐条询问。仅在容器/隔离环境或完全信任时使用", "tags": "yolo skip wx" },
+        { "label": "跳过全部确认 + 继续上次会话（危险）", "cmd": "claude --dangerously-skip-permissions -c", "desc": "免确认启动，并接着最近一次对话继续，不新建会话", "tags": "yolo skip continue jx wx" }
+      ]
+    },
+    {
+      "name": "会话内斜杠命令",
+      "items": [
+        { "label": "帮助：列出全部命令", "cmd": "/help", "desc": "显示当前可用的斜杠命令清单", "tags": "help bz" },
+        { "label": "清空上下文重新开始", "cmd": "/clear", "desc": "清掉当前对话历史，开一轮干净的对话", "tags": "clear qk" },
+        { "label": "压缩上下文（保留要点）", "cmd": "/compact", "desc": "上下文太长时做总结压缩，可以继续同一个任务", "tags": "compact ys" },
+        { "label": "看还剩多少上下文", "cmd": "/context", "desc": "显示上下文窗口的占用情况", "tags": "context sxw" },
+        { "label": "这次花了多少钱", "cmd": "/cost", "desc": "显示当前会话的 token 消耗和费用", "tags": "cost hf" },
+        { "label": "用量和额度", "cmd": "/usage", "desc": "查看订阅额度的使用情况", "tags": "usage yl" },
+        { "label": "当前状态一览", "cmd": "/status", "desc": "版本、账号、模型、工作目录等信息", "tags": "status zt" },
+        { "label": "生成项目说明 CLAUDE.md", "cmd": "/init", "desc": "扫描代码库，生成项目记忆文件 CLAUDE.md", "tags": "init csh" },
+        { "label": "编辑长期记忆", "cmd": "/memory", "desc": "打开 CLAUDE.md 等记忆文件进行编辑", "tags": "memory jy" },
+        { "label": "回退到之前的状态", "cmd": "/rewind", "desc": "把对话和文件改动回滚到某个检查点", "tags": "rewind ht" },
+        { "label": "代码审查", "cmd": "/review", "desc": "审查当前改动，或指定的 PR", "tags": "review sc" },
+        { "label": "导出本次对话", "cmd": "/export", "desc": "把会话内容导出成文件或复制到剪贴板", "tags": "export dc" },
+        { "label": "管理子代理 subagent", "cmd": "/agents", "desc": "查看与配置子代理", "tags": "agents dl" },
+        { "label": "配置钩子 hooks", "cmd": "/hooks", "desc": "在特定事件前后自动执行你自己的命令", "tags": "hooks gz" },
+        { "label": "打开设置", "cmd": "/config", "desc": "主题、默认模型等偏好设置", "tags": "config sz" }
+      ]
+    },
+    {
+      "name": "输入技巧 / 快捷键",
+      "items": [
+        { "label": "引用文件（@ 路径补全）", "cmd": "@", "desc": "输入 @ 后接路径，把指定文件内容带进上下文", "tags": "at file yy" },
+        { "label": "直接执行一条终端命令", "cmd": "!", "desc": "以 ! 开头，这一行会当成 shell 命令直接执行", "tags": "bash sh zx" },
+        { "label": "写入长期记忆", "cmd": "#", "desc": "以 # 开头，把这句话记录进 CLAUDE.md", "tags": "memo jy" },
+        { "label": "换行但不发送（按键）", "keys": ["Ctrl+J"], "desc": "Claude Code 通用的换行键，任何终端都能用，不需要任何配置。输入框下方那行提示写的就是 ctrl+j for newline", "tags": "newline hh ctrlj" },
+        { "label": "换行：Shift+Enter（需先配置）", "keys": ["Shift+Enter"], "desc": "只有部分终端支持，而且要先跑一次 /terminal-setup 写入按键绑定。不确定就用 Ctrl+J", "tags": "newline hh shiftenter" },
+        { "label": "撤销 / 编辑上一条（按键）", "keys": ["Escape", "Escape"], "desc": "连按两次 Esc，回到上一条消息进行修改", "tags": "esc cx" },
+        { "label": "打断正在执行的任务（按键）", "keys": ["Ctrl+C"], "desc": "停止当前正在跑的动作", "tags": "stop dd" },
+        { "label": "显示 / 隐藏详细过程（按键）", "keys": ["Ctrl+R"], "desc": "切换 verbose，查看完整的工具调用细节", "tags": "verbose xq" },
+        { "label": "只清屏不清上下文（按键）", "keys": ["Ctrl+L"], "desc": "清空屏幕显示，对话上下文保留", "tags": "clearscreen qp" },
+        { "label": "翻之前输入过的内容（按键）", "keys": ["Up"], "desc": "方向键上，向上翻输入历史", "tags": "history ls" }
+      ]
+    },
+    {
+      "name": "MCP 扩展",
+      "items": [
+        { "label": "MCP 服务器面板", "cmd": "/mcp", "desc": "查看已连接的 MCP 服务器和它们提供的工具", "tags": "mcp" },
+        { "label": "列出已配置的 MCP", "cmd": "claude mcp list", "desc": "在命令行查看 MCP 配置列表", "tags": "mcp list lb" },
+        { "label": "添加 MCP 服务器", "cmd": "claude mcp add ", "desc": "格式：claude mcp add <名字> -- <启动命令>", "tags": "mcp add tj" },
+        { "label": "用 JSON 添加 MCP", "cmd": "claude mcp add-json  ''", "desc": "直接粘贴一段 JSON 配置来添加服务器", "tags": "mcp json" },
+        { "label": "删除 MCP 服务器", "cmd": "claude mcp remove ", "desc": "移除指定名字的 MCP 服务器", "tags": "mcp remove sc" }
+      ]
+    },
+    {
+      "name": "安装 / 维护 / 排错",
+      "items": [
+        { "label": "体检：检查安装是否正常", "cmd": "claude doctor", "desc": "诊断安装、版本、权限、网络等常见问题", "tags": "doctor tj" },
+        { "label": "升级到最新版", "cmd": "claude update", "desc": "把 Claude Code 更新到最新版本", "tags": "update sj" },
+        { "label": "查看版本号", "cmd": "claude --version", "desc": "打印当前安装的版本", "tags": "version bb" },
+        { "label": "登录账号", "cmd": "/login", "desc": "登录或切换账号", "tags": "login dl" },
+        { "label": "退出登录", "cmd": "/logout", "desc": "清除本地保存的登录凭据", "tags": "logout tc" },
+        { "label": "修复终端按键（Shift+Enter）", "cmd": "/terminal-setup", "desc": "给当前终端写入 Shift+Enter 换行的按键绑定。部分终端不支持，会直接报错；Ctrl+J 换行则无需配置", "tags": "terminal ajm" },
+        { "label": "查看命令行全部参数", "cmd": "claude --help", "desc": "打印完整的 CLI 参数说明，忘了什么就看这个", "tags": "help cs" }
+      ]
+    },
+    {
+      "name": "终端 / Git 常用",
+      "items": [
+        { "label": "我现在在哪个目录", "cmd": "pwd", "desc": "显示当前工作目录", "tags": "pwd ml" },
+        { "label": "列出当前目录文件", "cmd": "ls", "desc": "查看当前目录下有什么", "tags": "ls dir wj" },
+        { "label": "切换目录", "cmd": "cd \"\"", "desc": "把路径写在引号里，避免空格出问题", "tags": "cd ml" },
+        { "label": "改了哪些文件", "cmd": "git status", "desc": "查看工作区状态", "tags": "git status zt" },
+        { "label": "具体改了什么", "cmd": "git diff", "desc": "查看还没暂存的代码差异", "tags": "git diff cy" },
+        { "label": "最近 10 条提交", "cmd": "git log --oneline -10", "desc": "简洁地看提交历史", "tags": "git log ls" },
+        { "label": "清屏", "cmd": "cls", "desc": "清空终端屏幕", "tags": "cls clear qp" }
+      ]
+    }
+  ]
+}

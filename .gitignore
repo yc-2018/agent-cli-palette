@@ -1,0 +1,10 @@
+# Diagnostic leftovers from -SelfTest / -Live runs.
+_diag*.ps1
+_diag_*.txt
+_bind_*.txt
+_keycheck.ps1
+palette-bind-*.txt
+
+# Local overrides: keep your own command table out of the repo by naming it
+# commands-local*.json -- the palette still discovers it as a profile.
+commands-local*.json

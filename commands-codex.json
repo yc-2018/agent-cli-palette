@@ -1,0 +1,139 @@
+{
+  "settings": {
+    "sidebarWidth": 300,
+    "insertMode": "type",
+    "autoEnter": false,
+    "topMost": false,
+    "shell": "auto",
+    "workDir": ""
+  },
+  "ui": {
+    "title": "Agent CLI 命令面板",
+    "btnNewTerminal": "新开终端",
+    "btnBind": "绑定窗口",
+    "btnDock": "贴靠排版",
+    "btnProfile": "命令表：{0} ▾（点击切换 CLI）",
+    "searchHint": "搜索命令（中文 / 英文 / 拼音缩写）",
+    "chkAutoEnter": "点击后自动回车",
+    "chkTopMost": "窗口置顶",
+    "chkTypeMode": "逐字模拟键盘输入（取消勾选＝用剪贴板粘贴）",
+    "noTarget": "未绑定终端",
+    "boundTo": "已绑定：",
+    "pickTitle": "选择要绑定的终端窗口",
+    "pickOk": "绑定",
+    "pickCancel": "取消",
+    "pickTerminalTag": "[终端] ",
+    "noResult": "没有匹配的命令",
+    "tipCmd": "命令：",
+    "tipKeys": "按键：",
+    "tipHelp": "左键 = 输入到终端　右键 = 复制到剪贴板",
+    "errNoTarget": "还没有绑定终端。请先点【新开终端】或【绑定窗口】。",
+    "errGone": "绑定的终端窗口已经关闭了，请重新绑定。",
+    "errFocus": "没能把输入焦点切到绑定的终端窗口，命令已取消（没有误输入到面板里）。\n\n常见原因：那个终端是以管理员身份运行的，普通权限的面板无法向它发送按键。请改用右键复制命令，或者用【新开终端】开一个同权限的终端。",
+    "errSpawn": "新终端启动了，但没能自动识别它的窗口。请点【绑定窗口】手动选一下。",
+    "reloadBtn": "重载命令表"
+  },
+  "groups": [
+    {
+      "name": "启动 / 会话",
+      "items": [
+        { "label": "启动 Codex（交互模式）", "cmd": "codex", "desc": "在当前目录打开 Codex 交互界面，最常用的一条", "tags": "start qd" },
+        { "label": "启动并直接提问", "cmd": "codex \"\"", "desc": "启动后把引号里的内容作为第一句提示发出去", "tags": "ask tw prompt" },
+        { "label": "继续最近一次会话", "cmd": "codex resume --last", "desc": "直接接着最后一次的会话继续，不用挑", "tags": "resume jx" },
+        { "label": "从历史会话里挑一个恢复", "cmd": "codex resume", "desc": "列出保存过的会话，选一个恢复", "tags": "resume hf" },
+        { "label": "从最近会话分叉出新的一支", "cmd": "codex fork --last", "desc": "以最近会话为起点复制一份，原会话不受影响", "tags": "fork ff" },
+        { "label": "一次性执行（不进交互）", "cmd": "codex exec \"\"", "desc": "非交互模式跑完就退出，适合脚本和管道；别名 codex e", "tags": "exec ycx" },
+        { "label": "非交互模式继续上次", "cmd": "codex exec resume --last", "desc": "在 exec 模式下接着最近一次会话跑", "tags": "exec resume jx" },
+        { "label": "指定工作根目录", "cmd": "codex -C \"\"", "desc": "让 agent 把指定目录当作工作根（等价 --cd）", "tags": "cd ml" },
+        { "label": "额外授权一个可写目录", "cmd": "codex --add-dir \"\"", "desc": "在主工作区之外再加一个可写目录", "tags": "adddir ml" },
+        { "label": "附加图片一起提问", "cmd": "codex -i \"\"", "desc": "把图片文件附到第一句提示上，可给多个（等价 --image）", "tags": "image tp" }
+      ]
+    },
+    {
+      "name": "模型 / 沙箱 / 审批",
+      "items": [
+        { "label": "指定模型启动", "cmd": "codex -m \"\"", "desc": "指定本次会话用哪个模型（等价 --model）", "tags": "model mx" },
+        { "label": "用本地开源模型", "cmd": "codex --oss", "desc": "走本地 provider（lmstudio / ollama），配合 --local-provider 指定", "tags": "oss local bd" },
+        { "label": "沙箱：只读", "cmd": "codex --sandbox read-only", "desc": "模型生成的命令只能读，不能改文件（等价 -s）", "tags": "sandbox sx zd" },
+        { "label": "沙箱：可写工作区", "cmd": "codex --sandbox workspace-write", "desc": "允许在工作区内写文件，日常开发的常用档位", "tags": "sandbox sx kx" },
+        { "label": "沙箱：完全放开（危险）", "cmd": "codex --sandbox danger-full-access", "desc": "不做沙箱限制，仅在你完全清楚后果时用", "tags": "sandbox sx wx" },
+        { "label": "审批：模型自己决定何时问", "cmd": "codex -a on-request", "desc": "交互使用推荐档；等价 --ask-for-approval", "tags": "approval sp" },
+        { "label": "审批：只放行可信命令", "cmd": "codex -a untrusted", "desc": "只有 ls、cat 这类可信命令免问，其余都升级给你确认", "tags": "approval sp kx" },
+        { "label": "审批：从不询问", "cmd": "codex -a never", "desc": "全程不问，失败直接回给模型；适合非交互跑批", "tags": "approval sp bw" },
+        { "label": "跳过全部审批和沙箱（极危险）", "cmd": "codex --dangerously-bypass-approvals-and-sandbox", "desc": "既不问也不沙箱。只应在外部已经隔离好的环境里用", "tags": "yolo skip wx" },
+        { "label": "开启联网搜索", "cmd": "codex --search", "desc": "让模型可以直接用 web_search 工具，不再逐次确认", "tags": "search ss lw" },
+        { "label": "叠加一个配置 profile", "cmd": "codex -p \"\"", "desc": "把 $CODEX_HOME/<名字>.config.toml 叠加到基础配置上", "tags": "profile pz" },
+        { "label": "临时覆盖一项配置", "cmd": "codex -c ", "desc": "格式：codex -c key=value，值按 TOML 解析，如 -c model=\"o3\"", "tags": "config pz fg" }
+      ]
+    },
+    {
+      "name": "会话内斜杠命令",
+      "items": [
+        { "label": "开一轮全新会话", "cmd": "/new", "desc": "丢掉当前上下文，从干净状态重新开始", "tags": "new qk xh" },
+        { "label": "生成项目说明 AGENTS.md", "cmd": "/init", "desc": "扫描仓库并生成 AGENTS.md，写入项目专属的指引", "tags": "init csh agents" },
+        { "label": "压缩上下文（保留要点）", "cmd": "/compact", "desc": "对话太长时做总结压缩，可以接着同一个任务干", "tags": "compact ys" },
+        { "label": "看当前改了什么", "cmd": "/diff", "desc": "显示本次会话产生的改动（不在 git 仓库里会提示）", "tags": "diff cy" },
+        { "label": "当前状态 / 用量", "cmd": "/status", "desc": "账号、模型、token 用量和额度剩余情况", "tags": "status zt yl" },
+        { "label": "换模型", "cmd": "/model", "desc": "会话中途切换模型", "tags": "model hmx" },
+        { "label": "审查当前改动", "cmd": "/review", "desc": "让 Codex 对你现在的改动做一次代码审查", "tags": "review sc" },
+        { "label": "MCP 服务器面板", "cmd": "/mcp", "desc": "列出已配置的 MCP 工具；/mcp verbose 看详情", "tags": "mcp" },
+        { "label": "列出可用 skills", "cmd": "/skills", "desc": "查看当前可用的 skill", "tags": "skills jn" },
+        { "label": "退出登录", "cmd": "/logout", "desc": "清掉本地保存的登录凭据", "tags": "logout tc" }
+      ]
+    },
+    {
+      "name": "代码审查 / 应用改动",
+      "items": [
+        { "label": "非交互跑一次代码审查", "cmd": "codex review", "desc": "直接对当前仓库做审查并输出结果", "tags": "review sc" },
+        { "label": "exec 模式的代码审查", "cmd": "codex exec review", "desc": "在非交互 exec 模式下审查当前仓库，适合接 CI", "tags": "exec review sc" },
+        { "label": "把上次的 diff 应用到工作区", "cmd": "codex apply", "desc": "用 git apply 把 agent 最近产出的补丁打到本地（别名 codex a）", "tags": "apply patch yy" },
+        { "label": "在 Codex 沙箱里跑命令", "cmd": "codex sandbox ", "desc": "把一条普通命令放进 Codex 提供的沙箱里执行", "tags": "sandbox sx" }
+      ]
+    },
+    {
+      "name": "MCP / 插件",
+      "items": [
+        { "label": "管理 MCP 服务器", "cmd": "codex mcp", "desc": "增删查改 Codex 用的外部 MCP 服务器", "tags": "mcp" },
+        { "label": "把 Codex 当成 MCP 服务器跑", "cmd": "codex mcp-server", "desc": "以 stdio 方式对外提供 MCP 服务，供别的客户端接入", "tags": "mcp server fw" },
+        { "label": "管理插件", "cmd": "codex plugin", "desc": "查看和管理 Codex 插件", "tags": "plugin cj" },
+        { "label": "查看功能开关", "cmd": "codex features", "desc": "列出 feature flag 状态；用 --enable / --disable 单次开关", "tags": "features kg" }
+      ]
+    },
+    {
+      "name": "会话管理 / 云端",
+      "items": [
+        { "label": "归档一个会话", "cmd": "codex archive ", "desc": "按 id 或名字把保存的会话归档", "tags": "archive gd" },
+        { "label": "取消归档", "cmd": "codex unarchive ", "desc": "把归档过的会话恢复出来", "tags": "unarchive qxgd" },
+        { "label": "永久删除一个会话", "cmd": "codex delete ", "desc": "按 id 或名字彻底删掉保存的会话，删了拿不回来", "tags": "delete sc" },
+        { "label": "浏览 Codex Cloud 任务", "cmd": "codex cloud", "desc": "实验特性：看云端任务并把改动拉到本地", "tags": "cloud yd" }
+      ]
+    },
+    {
+      "name": "安装 / 维护 / 排错",
+      "items": [
+        { "label": "体检：检查安装是否正常", "cmd": "codex doctor", "desc": "诊断本地安装、配置、登录状态和运行环境", "tags": "doctor tj" },
+        { "label": "升级到最新版", "cmd": "codex update", "desc": "把 Codex 更新到最新版本", "tags": "update sj" },
+        { "label": "查看版本号", "cmd": "codex --version", "desc": "打印当前安装的版本（等价 -V）", "tags": "version bb" },
+        { "label": "登录", "cmd": "codex login", "desc": "管理登录，走浏览器授权", "tags": "login dl" },
+        { "label": "退出登录（命令行）", "cmd": "codex logout", "desc": "清除本地保存的登录凭据", "tags": "logout tc" },
+        { "label": "关闭备用屏幕（保留滚动历史）", "cmd": "codex --no-alt-screen", "desc": "让界面直接画在终端里，退出后还能往上翻记录", "tags": "altscreen gd" },
+        { "label": "严格检查配置文件", "cmd": "codex --strict-config", "desc": "config.toml 里有本版本不认识的字段就直接报错", "tags": "strict pz" },
+        { "label": "生成 shell 补全脚本", "cmd": "codex completion ", "desc": "输出补全脚本，后面接 shell 名字", "tags": "completion bq" },
+        { "label": "调试工具", "cmd": "codex debug", "desc": "Codex 自带的调试子命令", "tags": "debug ts" },
+        { "label": "查看命令行全部参数", "cmd": "codex --help", "desc": "打印完整参数说明，忘了什么就看这个", "tags": "help cs" }
+      ]
+    },
+    {
+      "name": "终端 / Git 常用",
+      "items": [
+        { "label": "我现在在哪个目录", "cmd": "pwd", "desc": "显示当前工作目录", "tags": "pwd ml" },
+        { "label": "列出当前目录文件", "cmd": "ls", "desc": "查看当前目录下有什么", "tags": "ls dir wj" },
+        { "label": "切换目录", "cmd": "cd \"\"", "desc": "把路径写在引号里，避免空格出问题", "tags": "cd ml" },
+        { "label": "改了哪些文件", "cmd": "git status", "desc": "查看工作区状态", "tags": "git status zt" },
+        { "label": "具体改了什么", "cmd": "git diff", "desc": "查看还没暂存的代码差异", "tags": "git diff cy" },
+        { "label": "最近 10 条提交", "cmd": "git log --oneline -10", "desc": "简洁地看提交历史", "tags": "git log ls" },
+        { "label": "清屏", "cmd": "cls", "desc": "清空终端屏幕", "tags": "cls clear qp" }
+      ]
+    }
+  ]
+}

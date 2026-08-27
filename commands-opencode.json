@@ -1,0 +1,156 @@
+{
+  "settings": {
+    "sidebarWidth": 300,
+    "insertMode": "type",
+    "autoEnter": false,
+    "topMost": false,
+    "shell": "auto",
+    "workDir": ""
+  },
+  "ui": {
+    "title": "Agent CLI 命令面板",
+    "btnNewTerminal": "新开终端",
+    "btnBind": "绑定窗口",
+    "btnDock": "贴靠排版",
+    "btnProfile": "命令表：{0} ▾（点击切换 CLI）",
+    "searchHint": "搜索命令（中文 / 英文 / 拼音缩写）",
+    "chkAutoEnter": "点击后自动回车",
+    "chkTopMost": "窗口置顶",
+    "chkTypeMode": "逐字模拟键盘输入（取消勾选＝用剪贴板粘贴）",
+    "noTarget": "未绑定终端",
+    "boundTo": "已绑定：",
+    "pickTitle": "选择要绑定的终端窗口",
+    "pickOk": "绑定",
+    "pickCancel": "取消",
+    "pickTerminalTag": "[终端] ",
+    "noResult": "没有匹配的命令",
+    "tipCmd": "命令：",
+    "tipKeys": "按键：",
+    "tipHelp": "左键 = 输入到终端　右键 = 复制到剪贴板",
+    "errNoTarget": "还没有绑定终端。请先点【新开终端】或【绑定窗口】。",
+    "errGone": "绑定的终端窗口已经关闭了，请重新绑定。",
+    "errFocus": "没能把输入焦点切到绑定的终端窗口，命令已取消（没有误输入到面板里）。\n\n常见原因：那个终端是以管理员身份运行的，普通权限的面板无法向它发送按键。请改用右键复制命令，或者用【新开终端】开一个同权限的终端。",
+    "errSpawn": "新终端启动了，但没能自动识别它的窗口。请点【绑定窗口】手动选一下。",
+    "reloadBtn": "重载命令表"
+  },
+  "groups": [
+    {
+      "name": "启动 / 会话",
+      "items": [
+        { "label": "启动 OpenCode（TUI）", "cmd": "opencode", "desc": "在当前目录打开 opencode 的终端界面，最常用的一条", "tags": "start qd" },
+        { "label": "在指定目录启动", "cmd": "opencode \"\"", "desc": "把项目路径写在引号里，直接在那个目录里开工", "tags": "project ml" },
+        { "label": "启动并带上第一句提示", "cmd": "opencode --prompt \"\"", "desc": "进入界面时就把这句话发出去", "tags": "prompt tw" },
+        { "label": "继续上一次会话", "cmd": "opencode -c", "desc": "接着最近一次会话继续（等价 --continue）", "tags": "continue jx" },
+        { "label": "继续指定的会话", "cmd": "opencode -s ", "desc": "按 session id 恢复（等价 --session）", "tags": "session hf" },
+        { "label": "继续时分叉成新会话", "cmd": "opencode -c --fork", "desc": "配合 --continue 或 --session 用，原会话不受影响", "tags": "fork ff" },
+        { "label": "极简界面启动", "cmd": "opencode --mini", "desc": "打开最小化的交互界面", "tags": "mini jj" },
+        { "label": "一次性执行一句（不进 TUI）", "cmd": "opencode run \"\"", "desc": "跑完就退出，适合脚本和管道", "tags": "run ycx" },
+        { "label": "一次性执行并返回 JSON", "cmd": "opencode run --format json \"\"", "desc": "输出原始 JSON 事件流，方便程序解析", "tags": "run json" },
+        { "label": "一次性执行 + 继续上次", "cmd": "opencode run -c \"\"", "desc": "在 run 模式下接着最近一次会话跑", "tags": "run continue jx" },
+        { "label": "带附件执行", "cmd": "opencode run -f \"\" \"\"", "desc": "第一个引号里放要附上的文件，可以给多个（等价 --file）", "tags": "file fj" },
+        { "label": "列出所有会话", "cmd": "opencode session list", "desc": "查看保存过的会话", "tags": "session lb" },
+        { "label": "删除一个会话", "cmd": "opencode session delete ", "desc": "按 session id 删除，删了拿不回来", "tags": "session sc" },
+        { "label": "导出会话为 JSON", "cmd": "opencode export ", "desc": "后面接 sessionID，不给则导当前的", "tags": "export dc" },
+        { "label": "从 JSON 导入会话", "cmd": "opencode import ", "desc": "从本地文件或 URL 导入会话数据", "tags": "import dr" }
+      ]
+    },
+    {
+      "name": "模型 / Agent / 权限",
+      "items": [
+        { "label": "指定模型启动", "cmd": "opencode -m ", "desc": "写法是 provider/model，例如 anthropic/claude-sonnet-4-5（等价 --model）", "tags": "model mx" },
+        { "label": "列出全部可用模型", "cmd": "opencode models", "desc": "后面可以接 provider 名字只看某一家", "tags": "models mx" },
+        { "label": "指定 agent 启动", "cmd": "opencode --agent ", "desc": "选择用哪个 agent 跑这次会话", "tags": "agent dl" },
+        { "label": "管理 agent", "cmd": "opencode agent", "desc": "查看和配置 agent", "tags": "agent gl" },
+        { "label": "指定模型变体（推理强度）", "cmd": "opencode run --variant high \"\"", "desc": "provider 相关的推理档位，如 high / max / minimal", "tags": "variant sk" },
+        { "label": "显示思考过程", "cmd": "opencode run --thinking \"\"", "desc": "把 thinking 块一起打出来", "tags": "thinking sk" },
+        { "label": "自动放行权限（危险）", "cmd": "opencode --auto", "desc": "除了明确拒绝的，其余权限一律自动同意。仅在隔离环境用", "tags": "auto yolo wx" },
+        { "label": "管理提供方和凭据", "cmd": "opencode providers", "desc": "增删查改 AI provider 的登录信息（别名 opencode auth）", "tags": "providers auth py" }
+      ]
+    },
+    {
+      "name": "会话内斜杠命令",
+      "items": [
+        { "label": "帮助对话框", "cmd": "/help", "desc": "显示帮助，看当前能用什么", "tags": "help bz" },
+        { "label": "开一轮全新会话", "cmd": "/new", "desc": "开始一个干净的新会话（别名 /clear）", "tags": "new qk xh" },
+        { "label": "切换会话", "cmd": "/sessions", "desc": "列出、置顶、继续会话（别名 /resume、/continue）", "tags": "sessions hf" },
+        { "label": "压缩上下文（保留要点）", "cmd": "/compact", "desc": "上下文快到上限时把长会话总结压缩（别名 /summarize）", "tags": "compact ys" },
+        { "label": "跳到指定消息", "cmd": "/timeline", "desc": "在会话时间线上跳转到某条消息", "tags": "timeline sjx" },
+        { "label": "撤销上一条消息和文件改动", "cmd": "/undo", "desc": "回退最后一次消息以及它带来的文件修改", "tags": "undo ch" },
+        { "label": "恢复被撤销的内容", "cmd": "/redo", "desc": "把 /undo 撤掉的消息和文件改动还原回来", "tags": "redo hf" },
+        { "label": "从当前位置分叉会话", "cmd": "/fork", "desc": "复制一份会话继续走，原会话不受影响", "tags": "fork ff" },
+        { "label": "给会话改名", "cmd": "/rename", "desc": "重命名当前会话", "tags": "rename gm" },
+        { "label": "复制会话记录", "cmd": "/copy", "desc": "把整段对话复制到剪贴板", "tags": "copy fz" },
+        { "label": "导出会话为 Markdown", "cmd": "/export", "desc": "把对话存成 Markdown", "tags": "export dc" },
+        { "label": "公开分享会话", "cmd": "/share", "desc": "生成一个 opencode.ai 的公开链接", "tags": "share fx" },
+        { "label": "取消分享", "cmd": "/unshare", "desc": "把会话从公开访问里撤下来", "tags": "unshare qxfx" },
+        { "label": "生成项目规则", "cmd": "/init", "desc": "扫描代码库，自动生成项目规则（AGENTS.md）", "tags": "init csh agents" },
+        { "label": "审查改动", "cmd": "/review", "desc": "审查未提交的改动、某个分支或某个 PR", "tags": "review sc" },
+        { "label": "看改动 diff", "cmd": "/diff", "desc": "打开 diff 查看器", "tags": "diff cy" },
+        { "label": "换模型", "cmd": "/models", "desc": "在可用模型之间切换（别名 /mo）", "tags": "models hmx" },
+        { "label": "切换模型变体", "cmd": "/variants", "desc": "切换推理强度这类 provider 变体", "tags": "variants sk" },
+        { "label": "切换 agent", "cmd": "/agents", "desc": "在配置好的 agent 之间切换", "tags": "agents dl" },
+        { "label": "切换思考显示", "cmd": "/thinking", "desc": "控制思考内容显示与否", "tags": "thinking sk" },
+        { "label": "MCP 面板", "cmd": "/mcps", "desc": "查看和开关 MCP 服务器", "tags": "mcp" },
+        { "label": "查看 skills", "cmd": "/skills", "desc": "列出当前可用的 skill", "tags": "skills jn" },
+        { "label": "配置提供方 / 加 API Key", "cmd": "/connect", "desc": "接入 provider、填 API Key，支持 75+ 家", "tags": "connect py" },
+        { "label": "切主题", "cmd": "/themes", "desc": "在内置主题之间切换", "tags": "themes zt" },
+        { "label": "系统状态", "cmd": "/status", "desc": "看版本、目录、模型这些系统信息", "tags": "status zt" },
+        { "label": "用外部编辑器写", "cmd": "/editor", "desc": "打开你的外部编辑器来写这条消息", "tags": "editor bjq" },
+        { "label": "显示 / 隐藏时间戳", "cmd": "/timestamps", "desc": "切换消息时间戳的显示", "tags": "timestamps sj" },
+        { "label": "列出全部斜杠命令", "cmd": "/slash", "desc": "看当前所有可用的斜杠命令", "tags": "slash xg" },
+        { "label": "调试面板", "cmd": "/debug", "desc": "打开调试信息面板", "tags": "debug ts" },
+        { "label": "退出 OpenCode", "cmd": "/exit", "desc": "关掉 opencode（别名 /quit、/q）", "tags": "exit quit tc" }
+      ]
+    },
+    {
+      "name": "服务器 / 远程 / Web",
+      "items": [
+        { "label": "起一个无界面服务端", "cmd": "opencode serve", "desc": "headless 模式，供别的客户端连过来", "tags": "serve fw" },
+        { "label": "起服务端并打开网页界面", "cmd": "opencode web", "desc": "启动服务并在浏览器里打开 Web UI", "tags": "web wy" },
+        { "label": "连到一个正在跑的服务端", "cmd": "opencode attach ", "desc": "后面接 url，例如 http://localhost:4096", "tags": "attach ld" },
+        { "label": "指定监听端口", "cmd": "opencode --port ", "desc": "默认 0 表示随机端口", "tags": "port dk" },
+        { "label": "指定监听地址", "cmd": "opencode --hostname ", "desc": "默认 127.0.0.1", "tags": "hostname dz" },
+        { "label": "开启 mDNS 服务发现", "cmd": "opencode --mdns", "desc": "打开后地址默认变成 0.0.0.0，同网段可发现", "tags": "mdns fx" },
+        { "label": "允许额外的 CORS 域名", "cmd": "opencode --cors ", "desc": "给 Web 界面放行更多来源域名", "tags": "cors ky" },
+        { "label": "启动 ACP 服务", "cmd": "opencode acp", "desc": "以 Agent Client Protocol 对外提供服务", "tags": "acp fw" }
+      ]
+    },
+    {
+      "name": "MCP / 插件 / GitHub",
+      "items": [
+        { "label": "管理 MCP 服务器", "cmd": "opencode mcp", "desc": "增删查改 MCP（Model Context Protocol）服务器", "tags": "mcp" },
+        { "label": "安装插件", "cmd": "opencode plugin ", "desc": "安装插件并写进配置（别名 opencode plug）", "tags": "plugin cj" },
+        { "label": "不加载外部插件启动", "cmd": "opencode --pure", "desc": "排查问题时用，跳过所有外部插件", "tags": "pure pc" },
+        { "label": "管理 GitHub agent", "cmd": "opencode github", "desc": "配置在 issue / PR 里用 /opencode 触发的机器人", "tags": "github" },
+        { "label": "拉一个 PR 分支下来开工", "cmd": "opencode pr ", "desc": "后面接 PR 编号，签出分支后直接启动 opencode", "tags": "pr fz" }
+      ]
+    },
+    {
+      "name": "统计 / 维护 / 排错",
+      "items": [
+        { "label": "看 token 用量和花费", "cmd": "opencode stats", "desc": "统计消耗和费用", "tags": "stats yl hf" },
+        { "label": "升级到最新版", "cmd": "opencode upgrade", "desc": "后面也可以接具体版本号", "tags": "upgrade sj" },
+        { "label": "卸载 opencode", "cmd": "opencode uninstall", "desc": "卸载并清掉相关文件，执行前想清楚", "tags": "uninstall xz" },
+        { "label": "调试和排错工具", "cmd": "opencode debug", "desc": "自带的一组诊断子命令", "tags": "debug ts" },
+        { "label": "数据库工具", "cmd": "opencode db", "desc": "opencode 自带的数据库子命令", "tags": "db sjk" },
+        { "label": "把日志打到 stderr", "cmd": "opencode --print-logs", "desc": "排查启动问题时很有用", "tags": "logs rz" },
+        { "label": "设置日志级别", "cmd": "opencode --log-level DEBUG", "desc": "可选 DEBUG / INFO / WARN / ERROR", "tags": "loglevel rz" },
+        { "label": "生成 shell 补全脚本", "cmd": "opencode completion", "desc": "输出补全脚本", "tags": "completion bq" },
+        { "label": "查看版本号", "cmd": "opencode --version", "desc": "打印当前安装的版本（等价 -v）", "tags": "version bb" },
+        { "label": "查看命令行全部参数", "cmd": "opencode --help", "desc": "打印完整参数说明，忘了什么就看这个", "tags": "help cs" }
+      ]
+    },
+    {
+      "name": "终端 / Git 常用",
+      "items": [
+        { "label": "我现在在哪个目录", "cmd": "pwd", "desc": "显示当前工作目录", "tags": "pwd ml" },
+        { "label": "列出当前目录文件", "cmd": "ls", "desc": "查看当前目录下有什么", "tags": "ls dir wj" },
+        { "label": "切换目录", "cmd": "cd \"\"", "desc": "把路径写在引号里，避免空格出问题", "tags": "cd ml" },
+        { "label": "改了哪些文件", "cmd": "git status", "desc": "查看工作区状态", "tags": "git status zt" },
+        { "label": "具体改了什么", "cmd": "git diff", "desc": "查看还没暂存的代码差异", "tags": "git diff cy" },
+        { "label": "最近 10 条提交", "cmd": "git log --oneline -10", "desc": "简洁地看提交历史", "tags": "git log ls" },
+        { "label": "清屏", "cmd": "cls", "desc": "清空终端屏幕", "tags": "cls clear qp" }
+      ]
+    }
+  ]
+}

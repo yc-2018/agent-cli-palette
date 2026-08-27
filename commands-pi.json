@@ -1,0 +1,175 @@
+{
+  "settings": {
+    "sidebarWidth": 300,
+    "insertMode": "type",
+    "autoEnter": false,
+    "topMost": false,
+    "shell": "auto",
+    "workDir": ""
+  },
+  "ui": {
+    "title": "Agent CLI 命令面板",
+    "btnNewTerminal": "新开终端",
+    "btnBind": "绑定窗口",
+    "btnDock": "贴靠排版",
+    "btnProfile": "命令表：{0} ▾（点击切换 CLI）",
+    "searchHint": "搜索命令（中文 / 英文 / 拼音缩写）",
+    "chkAutoEnter": "点击后自动回车",
+    "chkTopMost": "窗口置顶",
+    "chkTypeMode": "逐字模拟键盘输入（取消勾选＝用剪贴板粘贴）",
+    "noTarget": "未绑定终端",
+    "boundTo": "已绑定：",
+    "pickTitle": "选择要绑定的终端窗口",
+    "pickOk": "绑定",
+    "pickCancel": "取消",
+    "pickTerminalTag": "[终端] ",
+    "noResult": "没有匹配的命令",
+    "tipCmd": "命令：",
+    "tipKeys": "按键：",
+    "tipHelp": "左键 = 输入到终端　右键 = 复制到剪贴板",
+    "errNoTarget": "还没有绑定终端。请先点【新开终端】或【绑定窗口】。",
+    "errGone": "绑定的终端窗口已经关闭了，请重新绑定。",
+    "errFocus": "没能把输入焦点切到绑定的终端窗口，命令已取消（没有误输入到面板里）。\n\n常见原因：那个终端是以管理员身份运行的，普通权限的面板无法向它发送按键。请改用右键复制命令，或者用【新开终端】开一个同权限的终端。",
+    "errSpawn": "新终端启动了，但没能自动识别它的窗口。请点【绑定窗口】手动选一下。",
+    "reloadBtn": "重载命令表"
+  },
+  "groups": [
+    {
+      "name": "启动 / 会话",
+      "items": [
+        { "label": "启动 Pi（交互模式）", "cmd": "pi", "desc": "在当前目录打开 pi 的交互界面，最常用的一条", "tags": "start qd" },
+        { "label": "启动并直接提问", "cmd": "pi \"\"", "desc": "把引号里的内容作为第一句提示发出去", "tags": "ask tw" },
+        { "label": "带文件一起提问", "cmd": "pi @", "desc": "用 @ 接文件路径，把文件内容一起交给模型，可以写多个", "tags": "file at wj" },
+        { "label": "一次性问答（不进交互）", "cmd": "pi -p \"\"", "desc": "print 模式：处理完就退出，适合脚本和管道（等价 --print）", "tags": "print ycx" },
+        { "label": "一次性问答并返回 JSON", "cmd": "pi --mode json -p \"\"", "desc": "输出模式改成 json，方便程序解析（还有 rpc 模式）", "tags": "json" },
+        { "label": "继续上一次会话", "cmd": "pi -c", "desc": "接着最近一次对话继续（等价 --continue）", "tags": "continue jx" },
+        { "label": "从历史会话里挑一个恢复", "cmd": "pi -r", "desc": "列出历史会话让你选一个恢复（等价 --resume）", "tags": "resume hf" },
+        { "label": "指定会话文件或 ID", "cmd": "pi --session \"\"", "desc": "用会话文件路径或 UUID 前几位定位一个会话", "tags": "session hh" },
+        { "label": "固定使用某个会话 ID", "cmd": "pi --session-id \"\"", "desc": "用指定的项目会话 ID，不存在就新建一个", "tags": "sessionid hh" },
+        { "label": "从某个会话分叉出新的一支", "cmd": "pi --fork \"\"", "desc": "复制指定会话成新会话，原会话不受影响", "tags": "fork ff" },
+        { "label": "临时会话（不落盘）", "cmd": "pi --no-session", "desc": "这次对话不保存，退出即消失", "tags": "nosession ls" },
+        { "label": "给这次会话起个名字", "cmd": "pi -n \"\"", "desc": "设置会话显示名，之后好找（等价 --name）", "tags": "name mc" },
+        { "label": "指定会话存放目录", "cmd": "pi --session-dir \"\"", "desc": "换一个目录存放和查找会话文件", "tags": "sessiondir ml" },
+        { "label": "把会话导出成 HTML", "cmd": "pi --export \"\"", "desc": "把指定会话文件导出为 HTML 后退出", "tags": "export dc" }
+      ]
+    },
+    {
+      "name": "模型 / 提供方 / 思考强度",
+      "items": [
+        { "label": "指定提供方启动", "cmd": "pi --provider ", "desc": "指定用哪个 provider（默认 google）", "tags": "provider tgf" },
+        { "label": "指定模型启动", "cmd": "pi --model \"\"", "desc": "支持模型 ID、provider/id 写法，还能带 :<thinking> 后缀", "tags": "model mx" },
+        { "label": "列出可用模型", "cmd": "pi --list-models", "desc": "打印能用的模型，后面可以接关键词做模糊搜索", "tags": "listmodels mx" },
+        { "label": "设置思考强度", "cmd": "pi --thinking high", "desc": "可选 off / minimal / low / medium / high / xhigh / max", "tags": "thinking sk" },
+        { "label": "设定 Ctrl+P 轮换的模型清单", "cmd": "pi --models \"\"", "desc": "逗号分隔的模型模式，支持 anthropic/* 这类通配和模糊匹配", "tags": "models lh" },
+        { "label": "直接指定 API Key", "cmd": "pi --api-key \"\"", "desc": "不写则从环境变量取", "tags": "apikey my" }
+      ]
+    },
+    {
+      "name": "提示词 / 上下文",
+      "items": [
+        { "label": "替换系统提示", "cmd": "pi --system-prompt \"\"", "desc": "整段换掉默认的编程助手系统提示", "tags": "systemprompt xtts" },
+        { "label": "追加系统提示", "cmd": "pi --append-system-prompt \"\"", "desc": "在默认提示后面追加文本或文件内容，可以用多次", "tags": "append zj" },
+        { "label": "不读 AGENTS.md / CLAUDE.md", "cmd": "pi -nc", "desc": "关闭项目上下文文件的发现和加载（等价 --no-context-files）", "tags": "nocontext sxw" },
+        { "label": "加载提示模板", "cmd": "pi --prompt-template \"\"", "desc": "指定模板文件或目录，可以用多次", "tags": "template mb" },
+        { "label": "关闭提示模板", "cmd": "pi -np", "desc": "不再发现和加载提示模板（等价 --no-prompt-templates）", "tags": "notemplate mb" }
+      ]
+    },
+    {
+      "name": "工具 / 扩展 / 技能 / 主题",
+      "items": [
+        { "label": "禁用所有工具", "cmd": "pi -nt", "desc": "内置和扩展工具全部默认关闭（等价 --no-tools）", "tags": "notools gj" },
+        { "label": "只禁用内置工具", "cmd": "pi -nbt", "desc": "关掉内置工具，但扩展和自定义工具照常可用", "tags": "nobuiltin gj" },
+        { "label": "工具白名单", "cmd": "pi -t \"\"", "desc": "逗号分隔，只允许列出的工具（等价 --tools）", "tags": "tools bmd" },
+        { "label": "工具黑名单", "cmd": "pi -xt \"\"", "desc": "逗号分隔，禁用列出的工具（等价 --exclude-tools）", "tags": "excludetools hmd" },
+        { "label": "加载一个扩展", "cmd": "pi -e \"\"", "desc": "指定扩展文件，可以用多次（等价 --extension）", "tags": "extension kz" },
+        { "label": "关闭扩展自动发现", "cmd": "pi -ne", "desc": "不自动找扩展，但 -e 明确给的路径仍然生效", "tags": "noextensions kz" },
+        { "label": "加载技能", "cmd": "pi --skill \"\"", "desc": "指定 skill 文件或目录，可以用多次", "tags": "skill jn" },
+        { "label": "关闭技能加载", "cmd": "pi -ns", "desc": "不发现也不加载 skill（等价 --no-skills）", "tags": "noskills jn" },
+        { "label": "加载主题", "cmd": "pi --theme \"\"", "desc": "指定主题文件或目录，可以用多次", "tags": "theme zt" },
+        { "label": "指定本次使用的主题", "cmd": "pi --use-theme \"\"", "desc": "设置这次交互的初始主题名", "tags": "usetheme zt" },
+        { "label": "全屏 TUI", "cmd": "pi --tui-mode fullscreen", "desc": "界面切成全屏模式（默认 regular）", "tags": "tui qp" }
+      ]
+    },
+    {
+      "name": "会话内斜杠命令",
+      "items": [
+        { "label": "开一轮全新会话", "cmd": "/new", "desc": "从干净状态重新开始", "tags": "new xh" },
+        { "label": "压缩上下文（保留要点）", "cmd": "/compact", "desc": "手动压缩当前会话上下文，后面还能跟自定义要求", "tags": "compact ys" },
+        { "label": "会话信息和统计", "cmd": "/session", "desc": "看当前会话的基本信息与用量统计", "tags": "session zt" },
+        { "label": "会话树（切换分支）", "cmd": "/tree", "desc": "在会话的分支之间导航切换", "tags": "tree fz" },
+        { "label": "从某条消息分叉", "cmd": "/fork", "desc": "挑一条之前的用户消息，从那里开新的一支", "tags": "fork ff" },
+        { "label": "在当前位置复制会话", "cmd": "/clone", "desc": "按当前进度复制一份会话出来", "tags": "clone fz" },
+        { "label": "恢复另一个会话", "cmd": "/resume", "desc": "会话中途切到别的历史会话", "tags": "resume hf" },
+        { "label": "从 JSONL 导入会话", "cmd": "/import", "desc": "导入一个 JSONL 会话文件并继续", "tags": "import dr" },
+        { "label": "导出会话", "cmd": "/export", "desc": "默认导出 HTML，也可以指定 .html / .jsonl 路径", "tags": "export dc" },
+        { "label": "分享会话（GitHub gist）", "cmd": "/share", "desc": "以 secret gist 的形式分享当前会话", "tags": "share fx" },
+        { "label": "复制上一条回复", "cmd": "/copy", "desc": "把模型最后一条消息复制到剪贴板", "tags": "copy fz" },
+        { "label": "给会话改名", "cmd": "/name", "desc": "设置会话的显示名", "tags": "name mc" },
+        { "label": "换模型（打开选择器）", "cmd": "/model", "desc": "打开模型选择界面，也可以直接写 /model provider/id", "tags": "model hmx" },
+        { "label": "设置思考强度", "cmd": "/thinking", "desc": "会话中途调思考等级，后面可以直接接等级名", "tags": "thinking sk" },
+        { "label": "配置 Ctrl+P 轮换的模型", "cmd": "/scoped-models", "desc": "勾选哪些模型参与 Ctrl+P 轮换", "tags": "scopedmodels lh" },
+        { "label": "打开设置菜单", "cmd": "/settings", "desc": "进入设置界面", "tags": "settings sz" },
+        { "label": "重新加载配置", "cmd": "/reload", "desc": "重载按键绑定、扩展、技能、提示模板、主题和上下文文件", "tags": "reload zz" },
+        { "label": "查看全部快捷键", "cmd": "/hotkeys", "desc": "列出当前所有键盘快捷键", "tags": "hotkeys kjj" },
+        { "label": "查看更新日志", "cmd": "/changelog", "desc": "显示 changelog 条目", "tags": "changelog rz" },
+        { "label": "配置提供方登录", "cmd": "/login", "desc": "后面可以接 provider 名字", "tags": "login dl" },
+        { "label": "移除提供方登录", "cmd": "/logout", "desc": "清掉保存的 provider 凭据", "tags": "logout tc" },
+        { "label": "信任当前项目", "cmd": "/trust", "desc": "把这个项目的信任决定保存下来，以后不再问", "tags": "trust xr" },
+        { "label": "调试信息", "cmd": "/debug", "desc": "打印调试用的内部信息", "tags": "debug ts" },
+        { "label": "退出 pi", "cmd": "/quit", "desc": "结束会话回到终端", "tags": "quit tc" }
+      ]
+    },
+    {
+      "name": "快捷键（Windows 默认）",
+      "items": [
+        { "label": "换行但不发送（按键）", "keys": ["Ctrl+J"], "desc": "pi 的换行键是 shift+enter 和 ctrl+j 两个都行；Ctrl+J 在任何终端都能用", "tags": "newline hh ctrlj" },
+        { "label": "发送（按键）", "keys": ["Enter"], "desc": "提交当前输入", "tags": "submit fs" },
+        { "label": "打断 / 取消（按键）", "keys": ["Escape"], "desc": "取消或中止当前动作", "tags": "interrupt dd esc" },
+        { "label": "清空输入框（按键）", "keys": ["Ctrl+C"], "desc": "清掉编辑器里的内容", "tags": "clear qk" },
+        { "label": "输入框为空时退出（按键）", "keys": ["Ctrl+D"], "desc": "编辑器为空时按下会退出 pi", "tags": "exit tc" },
+        { "label": "切换思考等级（按键）", "keys": ["Shift+Tab"], "desc": "在思考强度档位之间循环", "tags": "thinking sk shifttab" },
+        { "label": "下一个模型（按键）", "keys": ["Ctrl+P"], "desc": "在 --models 指定的清单里往后轮换", "tags": "model lh" },
+        { "label": "上一个模型（按键）", "keys": ["Alt+P"], "desc": "Windows 上的反向轮换键（其他平台是 Shift+Ctrl+P）", "tags": "model lh" },
+        { "label": "打开模型选择器（按键）", "keys": ["Ctrl+L"], "desc": "弹出模型选择界面", "tags": "model xzq" },
+        { "label": "展开 / 折叠工具输出（按键）", "keys": ["Ctrl+O"], "desc": "切换工具调用结果的显示", "tags": "tools gj" },
+        { "label": "显示 / 隐藏思考内容（按键）", "keys": ["Ctrl+T"], "desc": "切换 thinking 块的显示", "tags": "thinking sk" },
+        { "label": "用外部编辑器写（按键）", "keys": ["Ctrl+G"], "desc": "打开外部编辑器来编辑这条消息", "tags": "editor bjq" },
+        { "label": "复制消息（按键）", "keys": ["Ctrl+X"], "desc": "把消息复制到剪贴板", "tags": "copy fz" },
+        { "label": "粘贴图片（按键）", "keys": ["Alt+V"], "desc": "Windows 上的贴图键，剪贴板没有图就退回粘贴文本", "tags": "image tp" },
+        { "label": "排队一条后续消息（按键）", "keys": ["Ctrl+Q"], "desc": "Windows 上的排队键（其他平台是 Alt+Enter）", "tags": "queue pd" },
+        { "label": "取回排队的消息（按键）", "keys": ["Alt+Q"], "desc": "Windows 上把排队消息放回输入框（其他平台是 Alt+Up）", "tags": "queue pd" },
+        { "label": "搜索会话记录（按键）", "keys": ["Ctrl+Shift+F"], "desc": "在主滚动视图里搜索", "tags": "search ss" }
+      ]
+    },
+    {
+      "name": "扩展 / 维护 / 排错",
+      "items": [
+        { "label": "安装扩展", "cmd": "pi install ", "desc": "安装扩展源并写进设置，加 -l 只对当前项目生效", "tags": "install az" },
+        { "label": "移除扩展", "cmd": "pi remove ", "desc": "从设置里移除扩展源（别名 pi uninstall）", "tags": "remove yc" },
+        { "label": "列出已安装扩展", "cmd": "pi list", "desc": "看设置里装了哪些扩展", "tags": "list lb" },
+        { "label": "更新 pi 自己", "cmd": "pi update self", "desc": "升级 pi 本体（也可以写 pi update pi）", "tags": "update sj" },
+        { "label": "更新扩展 / 模型目录", "cmd": "pi update", "desc": "不带参数会更新扩展和模型目录，也可以指定某个源", "tags": "update sj" },
+        { "label": "打开资源开关 TUI", "cmd": "pi config", "desc": "启用/禁用包内资源，Tab 切换作用域；加 -l 只管当前项目", "tags": "config pz" },
+        { "label": "查看凭据 / 检查提供方", "cmd": "pi auth ", "desc": "打印凭据或检查 provider 是否就绪，如 pi auth print-api-key --provider openai", "tags": "auth py" },
+        { "label": "信任当前项目的本地文件", "cmd": "pi -a", "desc": "本次运行信任项目内的本地配置文件（等价 --approve）", "tags": "approve xr" },
+        { "label": "忽略项目本地文件", "cmd": "pi -na", "desc": "本次运行不读项目内的本地配置（等价 --no-approve）", "tags": "noapprove xr" },
+        { "label": "强制显示启动信息", "cmd": "pi --verbose", "desc": "覆盖 quietStartup 设置，把启动细节打出来", "tags": "verbose xq" },
+        { "label": "离线启动", "cmd": "pi --offline", "desc": "跳过启动时的网络操作（等价 PI_OFFLINE=1）", "tags": "offline lx" },
+        { "label": "查看版本号", "cmd": "pi --version", "desc": "打印当前版本（等价 -v）", "tags": "version bb" },
+        { "label": "查看命令行全部参数", "cmd": "pi --help", "desc": "打印完整参数说明，忘了什么就看这个", "tags": "help cs" }
+      ]
+    },
+    {
+      "name": "终端 / Git 常用",
+      "items": [
+        { "label": "我现在在哪个目录", "cmd": "pwd", "desc": "显示当前工作目录", "tags": "pwd ml" },
+        { "label": "列出当前目录文件", "cmd": "ls", "desc": "查看当前目录下有什么", "tags": "ls dir wj" },
+        { "label": "切换目录", "cmd": "cd \"\"", "desc": "把路径写在引号里，避免空格出问题", "tags": "cd ml" },
+        { "label": "改了哪些文件", "cmd": "git status", "desc": "查看工作区状态", "tags": "git status zt" },
+        { "label": "具体改了什么", "cmd": "git diff", "desc": "查看还没暂存的代码差异", "tags": "git diff cy" },
+        { "label": "最近 10 条提交", "cmd": "git log --oneline -10", "desc": "简洁地看提交历史", "tags": "git log ls" },
+        { "label": "清屏", "cmd": "cls", "desc": "清空终端屏幕", "tags": "cls clear qp" }
+      ]
+    }
+  ]
+}

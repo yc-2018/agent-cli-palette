@@ -1,0 +1,7 @@
+# Line endings: .cmd must stay CRLF or cmd.exe mis-parses it, so pin it rather
+# than letting core.autocrlf decide. Everything else is fine as LF -- PowerShell
+# 5.1 reads LF-only .ps1 without complaint, and the script reads the JSON
+# explicitly as UTF-8.
+* text=auto eol=lf
+*.cmd text eol=crlf
+*.bat text eol=crlf
