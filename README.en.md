@@ -126,3 +126,9 @@ These are not accidents — change them and things break:
 - **`.cmd` files must be CRLF.** `cmd.exe` mis-parses LF-only batch files. Pinned via `.gitattributes`.
 - **The launcher deliberately avoids `-ExecutionPolicy Bypass` + `-WindowStyle Hidden`.** That pair is the classic antivirus signature for a PowerShell loader, and the AV on this machine deletes `.cmd` files that use it. So the launcher shows its console honestly and the script hides it once the palette window is up — which also means a startup failure stays readable on screen.
 - **Never use `.GetNewClosure()` for event handlers.** A closure is hosted in its own dynamic module, so `$script:` assignments inside it never reach the enclosing script scope. Window binding once failed silently for exactly this reason.
+
+## License
+
+[GNU AGPL-3.0](LICENSE).
+
+Chosen because it is the strictest of the mainstream open-source licenses: anyone distributing a modified version must release the complete source under the same terms, and cannot fold it closed-source into their own product. What AGPL adds over GPL is the network clause — if you modify it and offer it to others as a network service, you owe them the source too. For a desktop tool that runs locally that clause will rarely trigger, but there is no downside to picking the strict end.

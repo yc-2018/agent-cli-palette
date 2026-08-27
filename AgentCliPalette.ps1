@@ -2,6 +2,15 @@
 # ============================================================================
 #  Agent CLI Command Palette  --  a dockable sidebar for any Windows terminal
 #
+#  Copyright (C) 2026 Agent CLI Palette contributors
+#
+#  This program is free software: you can redistribute it and/or modify it
+#  under the terms of the GNU Affero General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or (at your
+#  option) any later version. It is distributed WITHOUT ANY WARRANTY; without
+#  even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+#  PURPOSE. See the LICENSE file, or <https://www.gnu.org/licenses/>.
+#
 #  The palette itself understands nothing about the commands it sends: it types
 #  an item's text into the terminal you bound, or sends its key combo. Point it
 #  at a different commands.json (-Config) and it drives claude, gemini, codex,
