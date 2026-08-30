@@ -6,6 +6,8 @@ A dockable Windows sidebar that turns the flags and slash commands of AI coding 
 
 The palette itself understands nothing about the commands it sends. It does two things: type an item's text into the target terminal, or send its key combo. Swapping in a different `commands-*.json` therefore drives a different CLI without a line of code changing.
 
+![img_1.png](img/img_1.png)
+
 Four command tables ship with it:
 
 | Table | CLI | Groups | Items |
@@ -14,6 +16,8 @@ Four command tables ship with it:
 | `commands-codex.json` | OpenAI Codex CLI | 8 | 61 |
 | `commands-opencode.json` | OpenCode | 7 | 83 |
 | `commands-pi.json` | pi | 8 | 97 |
+
+![img.png](img/img.png)
 
 The shipped tables are written in Chinese, since that is what the author reads. Everything user-facing lives in JSON, so translating a table is editing strings — no code involved.
 
@@ -127,8 +131,6 @@ These are not accidents — change them and things break:
 - **The launcher deliberately avoids `-ExecutionPolicy Bypass` + `-WindowStyle Hidden`.** That pair is the classic antivirus signature for a PowerShell loader, and the AV on this machine deletes `.cmd` files that use it. So the launcher shows its console honestly and the script hides it once the palette window is up — which also means a startup failure stays readable on screen.
 - **Never use `.GetNewClosure()` for event handlers.** A closure is hosted in its own dynamic module, so `$script:` assignments inside it never reach the enclosing script scope. Window binding once failed silently for exactly this reason.
 
-## License
+## FriendshipLinks
 
-[GNU AGPL-3.0](LICENSE).
-
-Chosen because it is the strictest of the mainstream open-source licenses: anyone distributing a modified version must release the complete source under the same terms, and cannot fold it closed-source into their own product. What AGPL adds over GPL is the network clause — if you modify it and offer it to others as a network service, you owe them the source too. For a desktop tool that runs locally that clause will rarely trigger, but there is no downside to picking the strict end.
+- [linux.do](https://linux.do)

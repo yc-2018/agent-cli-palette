@@ -6,6 +6,8 @@
 
 面板本身不认识任何一条命令——它只做两件事：把条目里的文本输入到目标终端，或者向它发送一组按键。所以换一张 `commands-*.json` 就能换一个 CLI，不用改一行代码。
 
+![img_1.png](img/img_1.png)
+
 内置四张命令表，开箱可用：
 
 | 命令表 | 面向的 CLI | 分组 | 条目 |
@@ -14,6 +16,8 @@
 | `commands-codex.json` | OpenAI Codex CLI | 8 | 61 |
 | `commands-opencode.json` | OpenCode | 7 | 83 |
 | `commands-pi.json` | pi | 8 | 97 |
+
+![img.png](img/img.png)
 
 ## 为什么会有这个东西
 
@@ -125,8 +129,6 @@ powershell -NoProfile -STA -File AgentCliPalette.ps1 -KeepConsole
 - **启动器故意不用 `-ExecutionPolicy Bypass` + `-WindowStyle Hidden`。** 这对组合是杀毒软件识别 PowerShell 加载器的经典特征，本机的杀软会直接删掉这样的 `.cmd`。所以它老老实实先显示控制台，等面板窗口起来之后再由脚本自己隐藏——启动失败时报错还留在屏幕上，能看见。
 - **不要给事件处理器用 `.GetNewClosure()`。** 闭包会被托管在它自己的动态模块里，里面对 `$script:` 的赋值传不回外层脚本作用域。绑定窗口的功能就曾经因为这个静悄悄地失灵。
 
-## 许可证
+## 友情链接
 
-[GNU AGPL-3.0](LICENSE)。
-
-选它是因为它是主流开源许可证里最严的一档：任何人分发修改版都必须以同样的许可证公开完整源码，不能把它闭源包进自己的产品里。AGPL 相对 GPL 多出来的那条是——如果你把它改了之后作为网络服务提供给别人用，也必须向使用者提供源码。对这么一个跑在本机的桌面工具，这条基本不会被触发，但许可证选严的一档不会有坏处。
+- [linux.do](https://linux.do)
