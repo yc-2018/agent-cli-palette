@@ -8,11 +8,12 @@
 
 ![img_1.png](img/img_1.png)
 
-内置四张命令表，开箱可用：
+内置五张命令表，开箱可用：
 
 | 命令表 | 面向的 CLI | 分组 | 条目 |
 |---|---|---|---|
-| `commands-claude.json` | Claude Code | 7 | 60 |
+| `commands-claude.json` | Claude Code | 9 | 161 |
+| `commands-cmd.json` | Windows cmd.exe | 8 | 149 |
 | `commands-codex.json` | OpenAI Codex CLI | 8 | 61 |
 | `commands-opencode.json` | OpenCode | 7 | 83 |
 | `commands-pi.json` | pi | 8 | 97 |
@@ -83,6 +84,8 @@
 
 `ui` 块里没写的键会沿用当前正在用的那套文字，所以一张新表只给 `title` 加命令也能跑，缺的不会变成空按钮。
 
+`settings.shell` 决定【新开终端】开的是什么：`auto` 优先 `pwsh.exe`、没有就退回 `powershell.exe`，也可以直接写一个可执行文件名——`commands-cmd.json` 就把它设成了 `cmd.exe`，这样点开的终端正好是这张表里的命令所针对的那个 shell。
+
 ## 命令行参数
 
 ```powershell
@@ -109,9 +112,12 @@ powershell -NoProfile -STA -File AgentCliPalette.ps1 -KeepConsole
 
 同样的原因，有些东西被**故意留空**：
 
+- Claude Code 的快捷键取自 `claude.exe` 里内置的默认键位表（`context:"Global"` / `"Chat"` 那一段），所以 `Ctrl+O` 写成「展开完整记录」而不是网上常说的「切换 verbose」，`Ctrl+R` 是搜索输入历史。贴图键取 **Windows 分支**：二进制里是 `windows||wsl ? "alt+v" : "ctrl+v"`，所以这台机器上是 Alt+V。另外 `Ctrl+_`（撤销输入）、`Ctrl+]`（打开 artifact）**没有写进去**——这些键名在面板的虚拟键码表里会解析成别的键（`-` 会变成 Insert、`]` 会变成 Menu），发出去是错的，宁可不列。已经从 Claude Code 移除的 `/agents` 和 `/review` 也换掉了，前者改为直接编辑 `.claude/agents/`，后者改为 `/security-review` 和 `/ultrareview`。
 - Codex 的 `/approvals`、`/limits`、`/undo` 等在二进制里查不到，就没写进去。
 - OpenCode **没有快捷键分组**：它 TUI 的按键默认值在二进制里 grep 不到（能查到的那批属于 Web/桌面界面，不是终端），所以宁可不写。
 - pi 的快捷键取的是 **Windows 分支**。它的按键表里有 `windowsKeybindings ? "alt+v" : "ctrl+v"` 这样的判断，所以这台机器上贴图是 Alt+V、排队后续消息是 Ctrl+Q、上一个模型是 Alt+P，和其他平台不一样。
+- cmd 表的参数是逐条对着本机 `<命令> /?` 核的，`cmd /c help` 的内置命令清单也核过。两个例外：`sfc` 和 `DISM` 连显示帮助本身都要管理员权限（`DISM` 直接返回 `Error: 740`），所以这两条的子命令拼写没能在本机验证，条目说明里写明了需要管理员终端。
+- cmd 表里**没有** `mode con:` 改窗口大小和 `color` 改配色：这两条在 conhost 里有效，在 Windows Terminal 里会被忽略，给不出一个到处都对的说明。`wmic` 也没写——它已被微软标为弃用，新版本里随时可能消失。
 
 ## 已知限制
 

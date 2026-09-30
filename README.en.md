@@ -8,11 +8,12 @@ The palette itself understands nothing about the commands it sends. It does two 
 
 ![img_1.png](img/img_1.png)
 
-Four command tables ship with it:
+Five command tables ship with it:
 
 | Table | CLI | Groups | Items |
 |---|---|---|---|
-| `commands-claude.json` | Claude Code | 7 | 60 |
+| `commands-claude.json` | Claude Code | 9 | 161 |
+| `commands-cmd.json` | Windows cmd.exe | 8 | 149 |
 | `commands-codex.json` | OpenAI Codex CLI | 8 | 61 |
 | `commands-opencode.json` | OpenCode | 7 | 83 |
 | `commands-pi.json` | pi | 8 | 97 |
@@ -85,6 +86,8 @@ Per item:
 
 Any `ui` key you omit keeps the value already in use, so a new table can get away with just a `title` and its commands instead of rendering blank buttons.
 
+`settings.shell` decides what **New terminal** spawns: `auto` prefers `pwsh.exe` and falls back to `powershell.exe`, or name an executable yourself — `commands-cmd.json` sets it to `cmd.exe` so its table lands in the shell those commands are written for.
+
 ## Command-line options
 
 ```powershell
@@ -111,9 +114,12 @@ That policy came from getting it wrong. The palette once claimed Claude Code's n
 
 For the same reason some things are **deliberately absent**:
 
+- Claude Code's shortcuts come from the default keymap baked into `claude.exe` (the `context:"Global"` / `"Chat"` block), which is why `Ctrl+O` is labelled "expand transcript" rather than the widely-repeated "toggle verbose", and `Ctrl+R` searches input history. The image-paste key is the **Windows branch**: the binary reads `windows||wsl ? "alt+v" : "ctrl+v"`, so it's Alt+V here. `Ctrl+_` (undo input) and `Ctrl+]` (open artifact) are **left out** — those key names resolve to the wrong virtual keys in the palette's keycode table (`-` becomes Insert, `]` becomes Menu), so sending them would be wrong. The `/agents` and `/review` commands that Claude Code has since removed were replaced too: the former with editing `.claude/agents/` directly, the latter with `/security-review` and `/ultrareview`.
 - Codex's `/approvals`, `/limits`, `/undo` and friends could not be confirmed in the binary, so they were left out rather than guessed.
 - OpenCode has **no keyboard-shortcut group**. Its TUI keybinding defaults are not greppable in the binary (the ones that are belong to the web/desktop UI, not the terminal), so none were invented.
 - pi's shortcuts are the **Windows branch**. Its keymap contains tests like `windowsKeybindings ? "alt+v" : "ctrl+v"`, so on this platform pasting an image is Alt+V, queueing a follow-up is Ctrl+Q and the previous model is Alt+P — different from other platforms.
+- The cmd table's switches were checked one by one against `<command> /?` on this machine, as was the builtin list from `cmd /c help`. Two exceptions: `sfc` and `DISM` require administrator rights even to print their own help (`DISM` just answers `Error: 740`), so their subcommand spelling could not be verified locally — the entries say outright that they need an elevated terminal.
+- The cmd table deliberately leaves out `mode con:` for resizing and `color` for recolouring: both work in conhost and are ignored by Windows Terminal, so no description would be true everywhere. `wmic` is out too — Microsoft has deprecated it and it can disappear from any new build.
 
 ## Known limitations
 
