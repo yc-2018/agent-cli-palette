@@ -8,7 +8,7 @@ The palette itself understands nothing about the commands it sends. It does two 
 
 ![img_1.png](img/img_1.png)
 
-Five command tables ship with it:
+Six command tables ship with it:
 
 | Table | CLI | Groups | Items |
 |---|---|---|---|
@@ -17,6 +17,7 @@ Five command tables ship with it:
 | `commands-codex.json` | OpenAI Codex CLI | 8 | 61 |
 | `commands-opencode.json` | OpenCode | 7 | 83 |
 | `commands-pi.json` | pi | 8 | 97 |
+| `commands-powershell.json` | Windows PowerShell | 8 | 116 |
 
 ![img.png](img/img.png)
 
@@ -120,6 +121,7 @@ For the same reason some things are **deliberately absent**:
 - pi's shortcuts are the **Windows branch**. Its keymap contains tests like `windowsKeybindings ? "alt+v" : "ctrl+v"`, so on this platform pasting an image is Alt+V, queueing a follow-up is Ctrl+Q and the previous model is Alt+P — different from other platforms.
 - The cmd table's switches were checked one by one against `<command> /?` on this machine, as was the builtin list from `cmd /c help`. Two exceptions: `sfc` and `DISM` require administrator rights even to print their own help (`DISM` just answers `Error: 740`), so their subcommand spelling could not be verified locally — the entries say outright that they need an elevated terminal.
 - The cmd table deliberately leaves out `mode con:` for resizing and `color` for recolouring: both work in conhost and are ignored by Windows Terminal, so no description would be true everywhere. `wmic` is out too — Microsoft has deprecated it and it can disappear from any new build.
+- PowerShell and cmd are **two different things**, hence a separate table. The cmd idioms `dir /b`, `set VAR=value`, `%PATH%`, `| find /c /v ""` either error out or mean something else in PowerShell — its pipeline carries objects, not text, so the equivalents are `Get-ChildItem`, `$env:PATH`, `Where-Object`, `Measure-Object`. This table was checked against the **Windows PowerShell 5.1** that ships with the OS (cmdlet existence, alias mappings and the line-count idiom were all run for real); nothing PowerShell-7-only is used (`??`, ternary, `&&` pipeline chains, `ForEach-Object -Parallel`), so it runs on 5.1 as-is. `settings.shell` is `auto`: it uses `pwsh.exe` (7+) if present, otherwise the built-in `powershell.exe`. Many entries name the `dir`/`ls`/`cat`/`cp` aliases carried over from cmd and Unix to ease the transition.
 
 ## Known limitations
 

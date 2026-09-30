@@ -8,7 +8,7 @@
 
 ![img_1.png](img/img_1.png)
 
-内置五张命令表，开箱可用：
+内置六张命令表，开箱可用：
 
 | 命令表 | 面向的 CLI | 分组 | 条目 |
 |---|---|---|---|
@@ -17,6 +17,7 @@
 | `commands-codex.json` | OpenAI Codex CLI | 8 | 61 |
 | `commands-opencode.json` | OpenCode | 7 | 83 |
 | `commands-pi.json` | pi | 8 | 97 |
+| `commands-powershell.json` | Windows PowerShell | 8 | 116 |
 
 ![img.png](img/img.png)
 
@@ -118,6 +119,7 @@ powershell -NoProfile -STA -File AgentCliPalette.ps1 -KeepConsole
 - pi 的快捷键取的是 **Windows 分支**。它的按键表里有 `windowsKeybindings ? "alt+v" : "ctrl+v"` 这样的判断，所以这台机器上贴图是 Alt+V、排队后续消息是 Ctrl+Q、上一个模型是 Alt+P，和其他平台不一样。
 - cmd 表的参数是逐条对着本机 `<命令> /?` 核的，`cmd /c help` 的内置命令清单也核过。两个例外：`sfc` 和 `DISM` 连显示帮助本身都要管理员权限（`DISM` 直接返回 `Error: 740`），所以这两条的子命令拼写没能在本机验证，条目说明里写明了需要管理员终端。
 - cmd 表里**没有** `mode con:` 改窗口大小和 `color` 改配色：这两条在 conhost 里有效，在 Windows Terminal 里会被忽略，给不出一个到处都对的说明。`wmic` 也没写——它已被微软标为弃用，新版本里随时可能消失。
+- PowerShell 和 cmd **是两套东西**，所以单独一张表。cmd 里 `dir /b`、`set VAR=value`、`%PATH%`、`| find /c /v ""` 那套写法，在 PowerShell 里要么报错要么语义不同——PowerShell 的管道传的是对象不是文本，对应的是 `Get-ChildItem`、`$env:PATH`、`Where-Object`、`Measure-Object` 这一套。这张表以本机自带的 **Windows PowerShell 5.1** 为底线核过（cmdlet 存在性、别名映射、行数统计写法都实测过），凡是 PowerShell 7 才有的语法（`??`、三元、`&&` 管道链、`ForEach-Object -Parallel`）都没用，5.1 上照样能跑。`settings.shell` 设为 `auto`：有 `pwsh.exe`（7+）就用它，没有就退回自带的 `powershell.exe`。很多条目的说明里点明了 `dir`/`ls`/`cat`/`cp` 这些从 cmd、Unix 过来的别名，方便过渡。
 
 ## 已知限制
 
