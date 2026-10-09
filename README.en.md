@@ -8,13 +8,14 @@ The palette itself understands nothing about the commands it sends. It does two 
 
 ![img_1.png](img/img_1.png)
 
-Six command tables ship with it:
+Seven command tables ship with it:
 
 | Table | CLI | Groups | Items |
 |---|---|---|---|
 | `commands-claude.json` | Claude Code | 9 | 161 |
 | `commands-cmd.json` | Windows cmd.exe | 8 | 149 |
 | `commands-codex.json` | OpenAI Codex CLI | 8 | 61 |
+| `commands-git.json` | Git | 10 | 95 |
 | `commands-opencode.json` | OpenCode | 7 | 83 |
 | `commands-pi.json` | pi | 8 | 97 |
 | `commands-powershell.json` | Windows PowerShell | 8 | 116 |

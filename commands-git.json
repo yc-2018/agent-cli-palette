@@ -1,0 +1,183 @@
+{
+  "settings": {
+    "sidebarWidth": 300,
+    "insertMode": "type",
+    "autoEnter": false,
+    "topMost": false,
+    "shell": "auto",
+    "workDir": ""
+  },
+  "ui": {
+    "title": "Git 命令面板",
+    "btnNewTerminal": "新开终端",
+    "btnBind": "绑定窗口",
+    "btnDock": "贴靠排版",
+    "btnProfile": "命令表：{0} ▾（点击切换 CLI）",
+    "searchHint": "搜索命令（中文 / 英文 / 拼音缩写）",
+    "chkAutoEnter": "点击后自动回车",
+    "chkTopMost": "窗口置顶",
+    "chkTypeMode": "逐字模拟键盘输入（取消勾选＝用剪贴板粘贴）",
+    "noTarget": "未绑定终端",
+    "boundTo": "已绑定：",
+    "pickTitle": "选择要绑定的终端窗口",
+    "pickOk": "绑定",
+    "pickCancel": "取消",
+    "pickTerminalTag": "[终端] ",
+    "noResult": "没有匹配的命令",
+    "tipCmd": "命令：",
+    "tipKeys": "按键：",
+    "tipHelp": "左键 = 输入到终端　右键 = 复制到剪贴板",
+    "errNoTarget": "还没有绑定终端。请先点【新开终端】或【绑定窗口】。",
+    "errGone": "绑定的终端窗口已经关闭了，请重新绑定。",
+    "errFocus": "没能把输入焦点切到绑定的终端窗口，命令已取消（没有误输入到面板里）。\n\n常见原因：那个终端是以管理员身份运行的，普通权限的面板无法向它发送按键。请改用右键复制命令，或者用【新开终端】开一个同权限的终端。",
+    "errSpawn": "新终端启动了，但没能自动识别它的窗口。请点【绑定窗口】手动选一下。",
+    "reloadBtn": "重载命令表"
+  },
+  "groups": [
+    {
+      "name": "状态 / 差异",
+      "items": [
+        { "label": "改了哪些文件", "cmd": "git status", "desc": "查看当前分支、暂存区、工作区和未跟踪文件的状态", "tags": "git status zt wj" },
+        { "label": "简洁状态（含分支）", "cmd": "git status -sb", "desc": "用短格式列出文件状态；设置上游后还会显示领先或落后多少次提交", "tags": "git status short branch zt fz" },
+        { "label": "具体改了什么（未暂存）", "cmd": "git diff", "desc": "比较工作区与暂存区，只显示已跟踪文件尚未暂存的修改", "tags": "git diff unstaged cy xg" },
+        { "label": "这次准备提交什么", "cmd": "git diff --staged", "desc": "比较暂存区与 HEAD，提交前检查将要进入提交的内容", "tags": "git diff staged cached zc tj" },
+        { "label": "改动大小统计", "cmd": "git diff --stat", "desc": "按文件汇总未暂存改动的增删行数", "tags": "git diff stat tj hs" },
+        { "label": "检查未暂存改动的空白错误", "cmd": "git diff --check", "desc": "检查未暂存改动中的行尾空格、空白错误和冲突标记", "tags": "git diff check whitespace kb ct" },
+        { "label": "提交前检查空白错误", "cmd": "git diff --staged --check", "desc": "检查暂存区里的空白错误和冲突标记", "tags": "git diff staged check whitespace zc kb" },
+        { "label": "只看一个文件的改动", "cmd": "git diff -- \"\"", "desc": "在引号里填写文件路径，查看该文件尚未暂存的修改", "tags": "git diff file cy wj" }
+      ]
+    },
+    {
+      "name": "仓库 / 配置",
+      "items": [
+        { "label": "查看 Git 版本", "cmd": "git --version", "desc": "确认 Git 已安装，并查看当前使用的版本", "tags": "git version bb" },
+        { "label": "在当前目录初始化仓库", "cmd": "git init", "desc": "在当前目录创建 Git 仓库，初始分支名沿用 Git 配置", "tags": "git init repository csh ck" },
+        { "label": "克隆远程仓库", "cmd": "git clone \"\"", "desc": "在引号里填写仓库 URL，下载到当前目录下的新文件夹", "tags": "git clone download kl xz ck" },
+        { "label": "克隆并检出指定分支", "cmd": "git clone --branch \"\" \"\"", "desc": "第一组引号填分支名，第二组填仓库 URL；克隆后切到该分支", "tags": "git clone branch kl fz" },
+        { "label": "查看配置及来源", "cmd": "git config --show-origin --list", "desc": "列出各层配置及其来源文件，排查用户名、远程地址等设置", "tags": "git config list origin pz ly" },
+        { "label": "设置全局提交用户名", "cmd": "git config --global user.name \"\"", "desc": "在引号里填写提交作者名，作为当前用户各仓库的默认值", "tags": "git config global username qj yh" },
+        { "label": "设置全局提交邮箱", "cmd": "git config --global user.email \"\"", "desc": "在引号里填写提交作者邮箱，仓库级设置可以覆盖它", "tags": "git config global email qj yx" },
+        { "label": "只设置当前仓库的用户名", "cmd": "git config --local user.name \"\"", "desc": "在引号里填写作者名，只影响当前仓库", "tags": "git config local username bd yh" },
+        { "label": "只设置当前仓库的邮箱", "cmd": "git config --local user.email \"\"", "desc": "在引号里填写作者邮箱，只影响当前仓库", "tags": "git config local email bd yx" },
+        { "label": "让当前仓库直接显示中文路径", "cmd": "git config --local core.quotepath false", "desc": "输出路径时不再把中文等非 ASCII 字符转义成八进制；制表符等特殊字符仍会转义", "tags": "git config quotepath chinese zw lj" },
+        { "label": "查文件为什么被忽略", "cmd": "git check-ignore -v -- \"\"", "desc": "在引号里填写未跟踪文件的路径，查看命中的忽略规则及来源", "tags": "git check ignore gitignore hl gz" }
+      ]
+    },
+    {
+      "name": "暂存 / 提交",
+      "items": [
+        { "label": "暂存指定文件", "cmd": "git add -- \"\"", "desc": "在引号里填写文件或目录路径，把对应改动放入暂存区", "tags": "git add stage zc wj" },
+        { "label": "暂存整个仓库的改动", "cmd": "git add -A", "desc": "暂存整个仓库的新增、修改和删除；被忽略的未跟踪文件不会加入", "tags": "git add all stage zc qb" },
+        { "label": "只暂存已跟踪文件的改动", "cmd": "git add -u", "desc": "暂存已跟踪文件的修改和删除，不加入新文件", "tags": "git add update tracked zc gz" },
+        { "label": "逐块挑选要暂存的改动", "cmd": "git add -p", "desc": "进入交互模式，逐个改动块选择是否暂存", "tags": "git add patch interactive zc zk" },
+        { "label": "取消指定文件的暂存", "cmd": "git restore --staged -- \"\"", "desc": "在引号里填写路径，将它移出本次暂存内容，工作区改动保留", "tags": "git restore staged unstage qxzc" },
+        { "label": "取消当前目录的全部暂存", "cmd": "git restore --staged .", "desc": "恢复当前目录及子目录的暂存区到 HEAD，保留工作区文件；仓库根目录下才覆盖全仓库", "tags": "git restore staged unstage qxzc qb" },
+        { "label": "提交暂存的改动", "cmd": "git commit -m \"\"", "desc": "在引号里填写提交说明，只提交暂存区里的内容", "tags": "git commit message tj sm" },
+        { "label": "预览这次会提交哪些文件", "cmd": "git commit --dry-run", "desc": "显示本次可提交的文件状态，不创建提交", "tags": "git commit dryrun preview tj yl" },
+        { "label": "修改最近一次提交的说明", "cmd": "git commit --amend -m \"\"", "desc": "在引号里填写新说明；也会并入当前暂存内容并改写提交，只用于尚未共享的提交", "tags": "git commit amend message xg tj" },
+        { "label": "把暂存改动补进上次提交", "cmd": "git commit --amend --no-edit", "desc": "保留原说明，把暂存内容并入最近一次提交；会改写历史，只用于尚未共享的提交", "tags": "git commit amend noedit bc tj" }
+      ]
+    },
+    {
+      "name": "历史 / 查找",
+      "items": [
+        { "label": "最近 20 条提交", "cmd": "git log --oneline -20", "desc": "每条提交只显示短哈希和说明，快速浏览最近历史", "tags": "git log history ls tj" },
+        { "label": "查看分支提交图", "cmd": "git log --graph --oneline --decorate --all -30", "desc": "以文本图展示各分支最近 30 条提交及分支、标签位置", "tags": "git log graph branch history fzt ls" },
+        { "label": "查看一个文件的修改历史", "cmd": "git log -p -- \"\"", "desc": "在引号里填写文件路径，逐次查看该路径的提交和补丁，不跨重命名追踪", "tags": "git log patch file history wj ls" },
+        { "label": "按提交说明搜索", "cmd": "git log --oneline --grep=\"\"", "desc": "在引号里填写搜索词，按 Git 的基本正则表达式匹配提交说明", "tags": "git log grep search commit ss tj" },
+        { "label": "查看某次提交的详情", "cmd": "git show \"\"", "desc": "在引号里填写提交哈希，查看作者、说明和改动", "tags": "git show commit detail xq tj" },
+        { "label": "上次提交改了哪些文件", "cmd": "git show --stat HEAD", "desc": "显示最近一次提交的说明和文件改动统计", "tags": "git show stat head tj wj" },
+        { "label": "查每一行最后由谁修改", "cmd": "git blame -- \"\"", "desc": "在引号里填写文件路径，逐行显示最后修改它的提交和作者", "tags": "git blame author line zz hs" },
+        { "label": "在已跟踪文件里搜文本", "cmd": "git grep -n -F -e \"\"", "desc": "在引号里填写文本，按字面量搜索当前目录及子目录的已跟踪文件，并显示行号", "tags": "git grep search text ss wb" }
+      ]
+    },
+    {
+      "name": "分支 / 切换",
+      "items": [
+        { "label": "查看本地分支及上游", "cmd": "git branch -vv", "desc": "列出本地分支、最近提交和上游关系；领先或落后数量取决于上次获取的远程信息", "tags": "git branch upstream local fz sy" },
+        { "label": "查看本地和远程跟踪分支", "cmd": "git branch -a", "desc": "列出本地分支和已经获取到本地的远程跟踪分支", "tags": "git branch all remote fz yc" },
+        { "label": "我当前在哪个分支", "cmd": "git branch --show-current", "desc": "只打印当前分支名；游离 HEAD 状态下没有输出", "tags": "git branch current fz dq" },
+        { "label": "切换到已有分支", "cmd": "git switch \"\"", "desc": "在引号里填写分支名，切换当前工作分支", "tags": "git switch checkout branch qh fz" },
+        { "label": "创建并切换到新分支", "cmd": "git switch -c \"\"", "desc": "在引号里填写新分支名，从当前提交创建分支并切换过去", "tags": "git switch create branch xj fz" },
+        { "label": "切回上一个分支", "cmd": "git switch -", "desc": "切换到上一次所在的分支，适合在两个分支间往返", "tags": "git switch previous back qh fh" },
+        { "label": "从远程跟踪分支创建本地分支", "cmd": "git switch --track \"\"", "desc": "在引号里填写远程跟踪分支，如 origin/feature；创建本地分支并设置上游", "tags": "git switch track remote branch gz yc fz" },
+        { "label": "重命名当前分支", "cmd": "git branch -m \"\"", "desc": "在引号里填写新名字，只重命名当前本地分支", "tags": "git branch rename cmm fz" },
+        { "label": "删除已合并的本地分支", "cmd": "git branch -d \"\"", "desc": "在引号里填写分支名；Git 会检查它是否已合入上游，未设上游时检查 HEAD", "tags": "git branch delete merged sc fz" },
+        { "label": "查看已合入当前提交的分支", "cmd": "git branch --merged", "desc": "列出提交历史已经被当前 HEAD 包含的本地分支", "tags": "git branch merged cleanup hb fz" }
+      ]
+    },
+    {
+      "name": "远程 / 同步",
+      "items": [
+        { "label": "查看远程仓库地址", "cmd": "git remote -v", "desc": "列出各远程仓库的获取和推送地址", "tags": "git remote url address yc dz" },
+        { "label": "添加 origin 远程仓库", "cmd": "git remote add origin \"\"", "desc": "在引号里填写仓库 URL；若已存在 origin，请使用修改地址命令", "tags": "git remote add origin tj yc" },
+        { "label": "修改 origin 的地址", "cmd": "git remote set-url origin \"\"", "desc": "在引号里填写新的仓库 URL，更新 origin 的默认地址", "tags": "git remote seturl origin xg dz" },
+        { "label": "获取远程更新并清理失效引用", "cmd": "git fetch --all --prune", "desc": "从全部远程获取更新并清理已删除分支的跟踪引用，不合并进当前分支", "tags": "git fetch all prune remote hq gx" },
+        { "label": "获取 origin 的标签", "cmd": "git fetch --tags origin", "desc": "获取 origin 的更新，同时把远程标签取到本地", "tags": "git fetch tags origin hq bq" },
+        { "label": "拉取更新（仅允许快进）", "cmd": "git pull --ff-only", "desc": "从当前分支的上游获取并快进更新；历史分叉时停止，不自动创建合并提交", "tags": "git pull fastforward sync lq tb" },
+        { "label": "拉取更新并变基本地提交", "cmd": "git pull --rebase", "desc": "获取上游后，把本地提交重放到上游之后；会改写本地提交，适合尚未共享的改动", "tags": "git pull rebase sync lq bj" },
+        { "label": "按当前配置推送", "cmd": "git push", "desc": "按 push.default 和远程配置推送；新分支尚未设置上游时先用首次推送命令", "tags": "git push remote ts yc" },
+        { "label": "首次推送当前分支到 origin", "cmd": "git push --set-upstream origin HEAD", "desc": "将当前分支推到 origin 的同名分支，并设置上游；需处于分支上", "tags": "git push upstream origin first ts sy" },
+        { "label": "改写远程分支（谨慎）", "cmd": "git push --force-with-lease origin HEAD", "desc": "改写 origin 同名分支前核对远程是否仍与本地跟踪引用一致；后台 fetch 会影响此保护，仍可能覆盖他人提交", "tags": "git push force lease rewrite qz ts wx" },
+        { "label": "删除 origin 上的分支（谨慎）", "cmd": "git push origin --delete \"\"", "desc": "在引号里填写远程分支名，会删除 origin 上的共享分支，本地分支保留", "tags": "git push delete remote branch sc yc fz" }
+      ]
+    },
+    {
+      "name": "合并 / 变基",
+      "items": [
+        { "label": "把另一个分支合入当前分支", "cmd": "git merge \"\"", "desc": "在引号里填写待合入的分支名，可能快进或创建合并提交", "tags": "git merge branch hb fz" },
+        { "label": "合并并保留合并节点", "cmd": "git merge --no-ff \"\"", "desc": "在引号里填写分支名，有新提交可合入时即使能够快进也创建合并提交", "tags": "git merge noff commit hb jd" },
+        { "label": "解决冲突后继续合并", "cmd": "git merge --continue", "desc": "先修好冲突文件并用 git add 标记已解决，再继续完成合并", "tags": "git merge continue conflict jx hb ct" },
+        { "label": "中止当前合并", "cmd": "git merge --abort", "desc": "尝试恢复合并前状态；合并前已有未提交改动时，可能无法完整恢复", "tags": "git merge abort cancel zz hb" },
+        { "label": "把当前分支变基到另一分支", "cmd": "git rebase \"\"", "desc": "在引号里填写目标分支名，重放当前分支提交；会改写历史，只用于尚未共享的提交", "tags": "git rebase branch bj fz" },
+        { "label": "整理最近 3 次提交", "cmd": "git rebase -i HEAD~3", "desc": "打开交互列表以合并、重排或改写提交；数字可调整，只用于尚未共享的提交", "tags": "git rebase interactive squash bj zl hb" },
+        { "label": "解决冲突后继续变基", "cmd": "git rebase --continue", "desc": "先解决冲突并 git add，再继续重放后续提交", "tags": "git rebase continue conflict bj jx ct" },
+        { "label": "中止当前变基", "cmd": "git rebase --abort", "desc": "退出本次变基并回到变基开始前的分支状态", "tags": "git rebase abort cancel bj zz" },
+        { "label": "摘取一个提交到当前分支", "cmd": "git cherry-pick \"\"", "desc": "在引号里填写普通提交的哈希，将它的改动应用到当前分支并创建新提交", "tags": "git cherrypick cherry pick commit zq tj" },
+        { "label": "解决冲突后继续摘取", "cmd": "git cherry-pick --continue", "desc": "先解决冲突并 git add，再继续本次摘取操作", "tags": "git cherrypick continue conflict zq jx ct" },
+        { "label": "中止当前摘取", "cmd": "git cherry-pick --abort", "desc": "取消当前摘取序列，回到开始摘取之前的状态", "tags": "git cherrypick abort cancel zq zz" }
+      ]
+    },
+    {
+      "name": "临时保存 / Stash",
+      "items": [
+        { "label": "临时保存已跟踪文件的改动", "cmd": "git stash push -m \"\"", "desc": "在引号里填写备注，保存已跟踪文件的暂存与未暂存改动，并从工作区移走", "tags": "git stash push save tracked lsbc zc" },
+        { "label": "临时保存（包含新文件）", "cmd": "git stash push -u -m \"\"", "desc": "在引号里填写备注，同时保存未跟踪文件；被忽略的文件不包含在内", "tags": "git stash push untracked save lsbc xwj" },
+        { "label": "查看临时保存列表", "cmd": "git stash list", "desc": "列出 stash 记录及备注，stash@{0} 是最近一条", "tags": "git stash list lb lsbc" },
+        { "label": "查看最近一次临时保存的改动", "cmd": "git stash show -p \"stash@{0}\"", "desc": "显示最近一条记录中已跟踪文件的补丁；编号可改，引号用于兼容 PowerShell", "tags": "git stash show patch diff ck cy" },
+        { "label": "恢复临时保存（保留记录）", "cmd": "git stash apply \"stash@{0}\"", "desc": "应用指定记录但保留它，默认不恢复原暂存状态；需要时加 --index", "tags": "git stash apply restore keep hf bl" },
+        { "label": "恢复最近一次临时保存", "cmd": "git stash pop", "desc": "应用最近一条记录，成功后删除记录；发生冲突时记录会保留", "tags": "git stash pop restore hf lsbc" },
+        { "label": "删除一条临时保存（谨慎）", "cmd": "git stash drop \"stash@{0}\"", "desc": "删除指定 stash 记录，不会把其中改动恢复到工作区；先核对编号和内容", "tags": "git stash drop delete sc wx" }
+      ]
+    },
+    {
+      "name": "撤销 / 恢复",
+      "items": [
+        { "label": "丢弃文件的未暂存修改（危险）", "cmd": "git restore -- \"\"", "desc": "在引号里填写路径，用暂存区版本覆盖工作区；尚未保存到 Git 的修改会丢失", "tags": "git restore discard file cx dq wx" },
+        { "label": "撤回上次提交（保留暂存）", "cmd": "git reset --soft HEAD~1", "desc": "分支退回父提交，暂存区和工作区保持不变；会改写历史，只用于尚未共享的提交", "tags": "git reset soft undo commit cx tj zc" },
+        { "label": "撤回上次提交（重新选择暂存）", "cmd": "git reset --mixed HEAD~1", "desc": "分支退回父提交，重置暂存区并保留工作区文件；会取消现有暂存，只用于尚未共享的提交", "tags": "git reset mixed undo commit cx tj" },
+        { "label": "用新提交撤销旧提交", "cmd": "git revert \"\"", "desc": "在引号里填写普通提交的哈希，生成反向提交；保留原历史，适合已共享的提交", "tags": "git revert undo commit cx hf" },
+        { "label": "解决冲突后继续撤销", "cmd": "git revert --continue", "desc": "修好冲突并 git add 后，继续生成撤销提交", "tags": "git revert continue conflict cx jx ct" },
+        { "label": "中止当前撤销操作", "cmd": "git revert --abort", "desc": "取消本次 revert 序列并回到开始前的状态", "tags": "git revert abort cancel cx zz" },
+        { "label": "查看最近 20 次 HEAD 变动", "cmd": "git reflog -20", "desc": "查看本地 HEAD 移动记录，查找 reset、切分支等操作前的提交位置", "tags": "git reflog recover history hf jl" },
+        { "label": "预览可清理的未跟踪文件", "cmd": "git clean -nd", "desc": "列出当前目录下将被清理的未跟踪文件和目录，不删除，也不包含被忽略的文件", "tags": "git clean dryrun untracked preview ql yl" },
+        { "label": "交互清理未跟踪文件", "cmd": "git clean -di", "desc": "逐项选择要删除的未跟踪文件或目录，排除被忽略的文件；删除不进回收站", "tags": "git clean interactive untracked delete ql sc" },
+        { "label": "停止跟踪文件（保留本地）", "cmd": "git rm --cached -- \"\"", "desc": "在引号里填写文件路径，从暂存区移除跟踪但保留本地文件；通常还需加入 .gitignore 并提交", "tags": "git rm cached untrack ignore tz gz hl" }
+      ]
+    },
+    {
+      "name": "标签 / Worktree",
+      "items": [
+        { "label": "列出本地标签", "cmd": "git tag --list", "desc": "查看本地已经存在的标签名", "tags": "git tag list version bq lb" },
+        { "label": "为当前提交创建附注标签", "cmd": "git tag -a \"\" -m \"\"", "desc": "第一组引号填标签名，如 v1.0.0，第二组填标签说明", "tags": "git tag annotate release bq fb" },
+        { "label": "推送指定标签到 origin", "cmd": "git push origin tag \"\"", "desc": "在引号里填写本地标签名，只推送该标签及其所需对象", "tags": "git push tag origin release ts bq" },
+        { "label": "删除本地标签", "cmd": "git tag -d \"\"", "desc": "在引号里填写标签名，仅删除本地标签，远程标签不变", "tags": "git tag delete local sc bq" },
+        { "label": "查看所有工作树", "cmd": "git worktree list", "desc": "列出这个仓库的工作树目录、提交和分支", "tags": "git worktree list workspace gzs ml" },
+        { "label": "新建分支并放到另一目录", "cmd": "git worktree add -b \"\" \"\"", "desc": "第一组引号填新分支名，第二组填新目录路径；从当前提交创建独立工作树", "tags": "git worktree add branch create gzs xj fz" },
+        { "label": "在另一目录检出现有分支", "cmd": "git worktree add \"\" \"\"", "desc": "第一组引号填新目录路径，第二组填已有分支名；该分支不能已被其他工作树占用", "tags": "git worktree add branch checkout gzs jc" },
+        { "label": "移除已完成的工作树", "cmd": "git worktree remove \"\"", "desc": "在引号里填写工作树路径，删除该目录并注销工作树，分支保留；有未提交或未跟踪内容时默认拒绝", "tags": "git worktree remove delete gzs sc" },
+        { "label": "预览失效工作树记录的清理", "cmd": "git worktree prune --dry-run", "desc": "只报告按当前过期策略可清理的失效工作树管理记录，不删除工作目录", "tags": "git worktree prune dryrun cleanup gzs ql yl" }
+      ]
+    }
+  ]
+}
